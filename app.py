@@ -1,7 +1,7 @@
 import streamlit as st
-from file_utils import save_file_to_temp
-import conversion
-import clean
+from source.file_utils import save_file_to_temp
+import source.conversion as conversion
+import source.clean as clean
 
 def main():
     # Set the page title and layout

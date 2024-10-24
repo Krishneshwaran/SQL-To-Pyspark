@@ -1,5 +1,5 @@
 
-import prompt
+import source.prompt as prompt
 import google.generativeai as genai
 
 # Configure the Google AI API
