@@ -1,5 +1,5 @@
-import prompt
 
+import prompt
 import google.generativeai as genai
 
 # Configure the Google AI API
@@ -9,10 +9,16 @@ model = genai.GenerativeModel(
     model_name="gemini-1.5-flash",
 )
 
-
-def convert(source_code):
-
-    conversion_prompt = prompt.sql_to_pyspark_prompt(source_code)
+def convert(source_code, database_option):
+    # Choose the prompt based on the selected database option
+    if database_option == "Teradata":
+        conversion_prompt = prompt.teradata_to_pyspark_prompt(source_code)
+    elif database_option == "Oracle":
+        conversion_prompt = prompt.oracle_to_pyspark_prompt(source_code)
+    elif database_option == "Netezza":
+        conversion_prompt = prompt.sql_to_pyspark_prompt(source_code)
+    elif database_option == "Greenplum":
+        conversion_prompt = prompt.greenplum_to_pyspark_prompt(source_code)
 
     refined_prompt = [
         {
@@ -22,5 +28,4 @@ def convert(source_code):
     ]
 
     response = model.generate_content(refined_prompt)
-    # print(response)
     return response.text

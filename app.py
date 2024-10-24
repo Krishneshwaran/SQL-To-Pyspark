@@ -10,6 +10,12 @@ def main():
     st.title("Legacy Code Converter")
     st.write("Upload your legacy SQL code and convert it to PySpark format.")
 
+    # Dropdown to select the database
+    database_option = st.selectbox(
+        "Select the database type:",
+        ("Teradata", "Oracle", "Netezza", "Greenplum")
+    )
+
     # File uploader at the top
     uploaded_file = st.file_uploader("Upload your .sql file", type=["sql"])
 
@@ -47,7 +53,7 @@ def main():
     # Convert button below the code sections
     if st.button("Convert", key='convert_button'):
         if source_code:  # Check if source_code is not empty
-            response = conversion.convert(source_code)
+            response = conversion.convert(source_code, database_option)  # Pass the selected option to conversion
             st.session_state.conversion_result = clean.clean_pyspark_code(response)
             st.success("Conversion successful!")
         else:
